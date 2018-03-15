@@ -12,6 +12,7 @@ pipeline:
   deploy_now:
     image: lucap/drone-now
     alias: pantry-list-slack-bot
+    team: sharpnotions
     secrets: [ now_token ]
     when:
       branch: master
