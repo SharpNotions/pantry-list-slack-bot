@@ -1,3 +1,5 @@
+# TODO: Running on ryan.chatterton@sharpnotions.com now acccount
+# TODO: Add tests
 pipeline:
   build:
     image: node:8
