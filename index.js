@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   if (data && data.type === 'url_verification') {
     return res.end(data.challenge);
   }
-  send(👍, 200)
+  send(new Date().toString(), 200)
   if (data.event.type === 'message' && data.event.subtype !== 'bot_message') {
     const conversationId = data.event.channel
     const web = new WebClient(token)
@@ -20,6 +20,4 @@ module.exports = async (req, res) => {
     })
     .catch(console.error);
   }
-
-  return 'Hello World';
 }
