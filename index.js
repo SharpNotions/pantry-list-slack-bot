@@ -1,4 +1,4 @@
-const { json } = require('micro')
+const { json, send } = require('micro')
 const { WebClient } = require('@slack/client');
 
 const token = process.env.SLACK_TOKEN;
@@ -8,7 +8,7 @@ module.exports = async (req, res) => {
   if (data && data.type === 'url_verification') {
     return res.end(data.challenge);
   }
-
+  send(👍, 200)
   if (data.event.type === 'message' && data.event.subtype !== 'bot_message') {
     const conversationId = data.event.channel
     const web = new WebClient(token)
