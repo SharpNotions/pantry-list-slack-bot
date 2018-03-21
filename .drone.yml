@@ -13,6 +13,7 @@ pipeline:
     alias: pantry-list-slack-bot.now.sh
     team: sharpnotions
     secrets: [ now_token ]
+    cleanup: true
     when:
       branch: master
       event: push
