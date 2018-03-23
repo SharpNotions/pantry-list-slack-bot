@@ -10,7 +10,7 @@ pipeline:
 
   deploy_now:
     image: lucap/drone-now
-    alias: pantry-list-slack-bot.now.sh
+    alias: pantry-list-slack-bot
     team: sharpnotions
     secrets: [ now_token ]
     cleanup: true
