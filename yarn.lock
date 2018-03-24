@@ -1561,6 +1561,12 @@ micromatch@^3.1.4:
     snapdragon "^0.8.1"
     to-regex "^3.0.1"
 
+microrouter@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/microrouter/-/microrouter-3.1.1.tgz#d0a007c4f986d7e805bf6685eda4937d69002165"
+  dependencies:
+    url-pattern "^1.0.3"
+
 mime-db@~1.33.0:
   version "1.33.0"
   resolved "https://registry.yarnpkg.com/mime-db/-/mime-db-1.33.0.tgz#a3492050a5cb9b63450541e39d9788d2272783db"
@@ -1702,10 +1708,6 @@ normalize-url@2.0.1:
     prepend-http "^2.0.0"
     query-string "^5.0.1"
     sort-keys "^2.0.0"
-
-now@^10.1.5:
-  version "10.1.5"
-  resolved "https://registry.yarnpkg.com/now/-/now-10.1.5.tgz#6d5ed80723aacf101103a200f56635cf870872fb"
 
 npm-run-path@^2.0.0:
   version "2.0.2"
@@ -2574,6 +2576,10 @@ url-parse-lax@^3.0.0:
   resolved "https://registry.yarnpkg.com/url-parse-lax/-/url-parse-lax-3.0.0.tgz#16b5cafc07dbe3676c1b1999177823d6503acb0c"
   dependencies:
     prepend-http "^2.0.0"
+
+url-pattern@^1.0.3:
+  version "1.0.3"
+  resolved "https://registry.yarnpkg.com/url-pattern/-/url-pattern-1.0.3.tgz#0409292471b24f23c50d65a47931793d2b5acfc1"
 
 url-to-options@^1.0.1:
   version "1.0.1"
