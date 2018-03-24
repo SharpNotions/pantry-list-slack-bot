@@ -18,5 +18,10 @@
   "devDependencies": {
     "micro-dev": "^2.2.0",
     "ngrok": "^3.0.0"
+  },
+  "now": {
+    "env": {
+      "SLACK_WEBHOOK_URL":"@slack_webhook_url"
+    }
   }
 }
