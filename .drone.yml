@@ -15,6 +15,7 @@ pipeline:
     team: sharpnotions
     secrets: [ now_token ]
     cleanup: true
+    public: true
     when:
       branch: master
       event: push
