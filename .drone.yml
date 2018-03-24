@@ -14,7 +14,7 @@ pipeline:
     alias: pantry-list-slack-bot
     team: sharpnotions
     secrets: [ now_token ]
-    # cleanup: true
+    cleanup: true
     public: true
     when:
       branch: master

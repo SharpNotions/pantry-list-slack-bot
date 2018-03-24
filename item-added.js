@@ -1,7 +1,5 @@
 const { json } = require('micro')
 const { IncomingWebhook } = require('@slack/client');
-const url = process.env.SLACK_WEBHOOK_URL;
-const webhook = new IncomingWebhook(url, {});
 
 const attachments = {
   "attachments": [{
@@ -21,6 +19,7 @@ module.exports = async (req, res) => {
     "text": `${body.item_name || 'An item'} was just added to the pantry list`,
     "callback_id": "item_added_action"
   };
+  const webhook = new IncomingWebhook(process.env.SLACK_WEBHOOK_URL, {});
   return webhook.send(message, (err, response) => {
     if (err) {
         console.log('Error:', err);
