@@ -6,7 +6,7 @@ pipeline:
     commands:
       - yarn
       - ./scripts/ci/build_env.sh
-    secrets: [ slack_token, slack_webhook_url ]
+    secrets: [ slack_token ]
 
   deploy_now:
     image: sharpnotionsllc/drone-now
@@ -30,7 +30,7 @@ pipeline:
     when:
       branch: master
       event: push
-      status: [ success, failure]
+      status: [ failure ]
     template: >
       {{#success build.status}}
         [<{{ build.link }}|#{{ build.number }}> {{ build.event }}] {{ repo.owner }}/{{ repo.name }} ({{ build.author }}, build succeeded). :rocket:
