@@ -20,20 +20,20 @@ pipeline:
       branch: master
       event: push
 
-  # notify:
-  #   image: plugins/slack
-  #   channel: ten-hour-projects
-  #   webhook: ${SLACK_WEBHOOK}
-  #   username: drone
-  #   icon_url: https://discourse.drone.io/uploads/drone/original/1X/3c1169460330cd8c88c9da925e7bbbd7ace83200.png
-  #   secrets: [ slack_webhook ]
-  #   when:
-  #     branch: master
-  #     event: push
-  #     status: [ success, failure]
-  #   template: >
-  #     {{#success build.status}}
-  #       [<{{ build.link }}|#{{ build.number }}> {{ build.event }}] {{ repo.owner }}/{{ repo.name }} ({{ build.author }}, build succeeded). :rocket:
-  #     {{else}}
-  #       [<{{ build.link }}|#{{ build.number }}> {{ build.event }}] {{ repo.owner }}/{{ repo.name }} ({{ build.author }}, build Failed). :skull:
-  #     {{/success}}
+  notify:
+    image: plugins/slack
+    channel: ten-hour-projects
+    webhook: ${SLACK_WEBHOOK}
+    username: drone
+    icon_url: https://discourse.drone.io/uploads/drone/original/1X/3c1169460330cd8c88c9da925e7bbbd7ace83200.png
+    secrets: [ slack_webhook ]
+    when:
+      branch: master
+      event: push
+      status: [ success, failure]
+    template: >
+      {{#success build.status}}
+        [<{{ build.link }}|#{{ build.number }}> {{ build.event }}] {{ repo.owner }}/{{ repo.name }} ({{ build.author }}, build succeeded). :rocket:
+      {{else}}
+        [<{{ build.link }}|#{{ build.number }}> {{ build.event }}] {{ repo.owner }}/{{ repo.name }} ({{ build.author }}, build Failed). :skull:
+      {{/success}}
