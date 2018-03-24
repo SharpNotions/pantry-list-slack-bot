@@ -1,9 +1,11 @@
 const { json, send } = require('micro')
+const { router, post } = require('microrouter')
 const { WebClient } = require('@slack/client');
+const itemAdded = require('./item-added');
 
 const token = process.env.SLACK_TOKEN;
 
-module.exports = async (req, res) => {
+const events = async (req, res) => {
   const data = await json(req)
   if (data && data.type === 'url_verification') {
     return res.end(data.challenge);
@@ -21,3 +23,8 @@ module.exports = async (req, res) => {
     .catch(console.error);
   }
 }
+
+module.exports = router(
+  post('/events', events),
+  post('/item-added', itemAdded)
+)
