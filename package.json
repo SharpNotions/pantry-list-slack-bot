@@ -11,7 +11,7 @@
     "ngrok": "ngrok http 3000"
   },
   "dependencies": {
-    "@slack/client": "^4.0.0",
+    "@slack/client": "^4.1.0",
     "micro": "^9.1.0",
     "microrouter": "^3.1.1"
   },
@@ -21,7 +21,7 @@
   },
   "now": {
     "env": {
-      "SLACK_WEBHOOK_URL":"@slack_webhook_url"
+      "SLACK_WEBHOOK_URL": "@slack_webhook_url"
     }
   }
 }
