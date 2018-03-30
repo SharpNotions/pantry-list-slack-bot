@@ -1,6 +1,6 @@
 const { json } = require('micro')
 const { WebClient } = require('@slack/client');
-const { TOKEN, CHANNEL_ID } = process.env;
+const { SLACK_TOKEN, CHANNEL_ID } = process.env;
 
 const attachments = [{
     "title": "Open Pantry List",
@@ -16,7 +16,7 @@ const attachments = [{
 module.exports = async (req, res) => {
   const body = await json(req);
   const text = `${body.item_name || 'An item'} was just added to the pantry list`
-  const { chat } = new WebClient(TOKEN)
+  const { chat } = new WebClient(SLACK_TOKEN)
   return chat.postMessage({
     channel: CHANNEL_ID,
     text,
