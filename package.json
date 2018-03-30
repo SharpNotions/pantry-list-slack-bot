@@ -13,7 +13,10 @@
   "dependencies": {
     "@slack/client": "^4.1.0",
     "micro": "^9.1.0",
-    "microrouter": "^3.1.1"
+    "microrouter": "^3.1.1",
+    "node-fetch": "^2.1.2",
+    "require-directory": "^2.1.1",
+    "urlencoded-body-parser": "^2.0.1"
   },
   "devDependencies": {
     "micro-dev": "^2.2.0",
@@ -21,7 +24,10 @@
   },
   "now": {
     "env": {
-      "SLACK_WEBHOOK_URL": "@slack_webhook_url"
+      "NODE_ENV": "production",
+      "SLACK_TOKEN": "@slack_token",
+      "SLACK_WEBHOOK_URL": "@slack_webhook_url",
+      "SLACK_VERIFICATION_TOKEN": "@slack_verification_token"
     }
   }
 }
