@@ -27,7 +27,8 @@
       "NODE_ENV": "production",
       "SLACK_TOKEN": "@slack_token",
       "SLACK_WEBHOOK_URL": "@slack_webhook_url",
-      "SLACK_VERIFICATION_TOKEN": "@slack_verification_token"
+      "SLACK_VERIFICATION_TOKEN": "@slack_verification_token",
+      "CHANNEL_ID": "C965FPQNQ"
     }
   }
 }

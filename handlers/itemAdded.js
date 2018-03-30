@@ -1,6 +1,6 @@
 const { json } = require('micro')
 const { WebClient } = require('@slack/client');
-const token = process.env.SLACK_TOKEN;
+const { TOKEN, CHANNEL_ID } = process.env;
 
 const attachments = [{
     "title": "Open Pantry List",
@@ -15,19 +15,13 @@ const attachments = [{
 
 module.exports = async (req, res) => {
   const body = await json(req);
-  const message = {
-    "text": `${body.item_name || 'An item'} was just added to the pantry list`,
-    "callback_id": "item_added_action"
-  };
-  const web = new WebClient(token)
-  const { channel } = await web.channels.info({channel: 'C965FPQNQ'})
-  return channel.members.map(async member => {
-    const { channel } = await web.im.open({ user: member });
-    return web.chat.postMessage({
-      channel: channel.id,
-      text: message.text, attachments
-    })
-    .then(console.log)
-    .catch(console.error)
+  const text = `${body.item_name || 'An item'} was just added to the pantry list`
+  const { chat } = new WebClient(TOKEN)
+  return chat.postMessage({
+    channel: CHANNEL_ID,
+    text,
+    attachments
   })
+  .then(console.log)
+  .catch(console.error);
 }
