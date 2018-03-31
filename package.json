@@ -1,7 +1,7 @@
 {
   "name": "pantry-list-slack-bot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/SharpNotions/pantry-list-slack-bot.git",
   "author": "Phill Ayers <phillip.ayers@sharpnotions.com>",
   "license": "MIT",
