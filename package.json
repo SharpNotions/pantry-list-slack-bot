@@ -7,7 +7,7 @@
   "license": "MIT",
   "scripts": {
     "start": "micro",
-    "dev": "micro-dev",
+    "dev": "NODE_PATH='.' micro-dev",
     "ngrok": "ngrok http 3000"
   },
   "dependencies": {
@@ -24,6 +24,7 @@
   },
   "now": {
     "env": {
+      "NODE_PATH": ".",
       "NODE_ENV": "production",
       "SLACK_TOKEN": "@slack_token",
       "SLACK_WEBHOOK_URL": "@slack_webhook_url",
