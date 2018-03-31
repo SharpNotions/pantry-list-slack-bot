@@ -29,13 +29,14 @@ function getTextForResponse() {
     'No problem!',
     'At once your holiness!',
     'This is so much better than a whiteboard.',
-    'Ask and ye shall receive:'
+    'Ask and ye shall receive:',
+    "Aye Aye Cap'n"
   ]
   return responses[Math.floor(Math.random() * responses.length)]
 }
 
 async function getUserRanking(user) {
-  const url = `https://pantry-list-api-pr-19.herokuapp.com/user_ranking?user=${user}`
+  const url = `https://pantry-list-api.herokuapp.com/user_ranking?user=${user}`
 
   const userRankings = await fetch(url, {
     headers: { authorization: `Bearer ${process.env.SLACK_TOKEN}` }
