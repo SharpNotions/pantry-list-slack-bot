@@ -1,6 +1,6 @@
 const fetch = require('node-fetch')
 const { json } = require('micro')
-const { getUserEmail } = require('helpers');
+const { getUserEmail } = require('helpers')
 const GET_USER_RANKINGS = 'GET_USER_RANKINGS'
 
 const dialogflow = async (req, res) => {
@@ -19,7 +19,7 @@ const dialogflow = async (req, res) => {
 
 function getTextForResponse() {
   const responses = [
-    'Here\'s your list...',
+    "Here's your list...",
     'Voila!',
     'Your list, as requested:',
     'Here ya go!',
@@ -40,17 +40,21 @@ async function getUserRanking(user) {
   const userRankings = await fetch(url, {
     headers: { authorization: `Bearer ${process.env.SLACK_TOKEN}` }
   })
-  .then(response => response.json())
-  .then(rankings => rankings.map((item, index) => ({ "text": `${index + 1}. ${item.item_name}` })));
+    .then(response => response.json())
+    .then(rankings =>
+      rankings.map((item, index) => ({
+        text: `${index + 1}. ${item.item_name}`
+      }))
+    )
 
   const slack_message = {
-    "text": getTextForResponse(),
-    "attachments": userRankings
-  };
+    text: getTextForResponse(),
+    attachments: userRankings
+  }
 
   return {
-    "data": {"slack": slack_message}
+    data: { slack: slack_message }
   }
 }
 
-module.exports = dialogflow;
+module.exports = dialogflow

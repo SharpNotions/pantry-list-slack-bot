@@ -20,7 +20,8 @@
   },
   "devDependencies": {
     "micro-dev": "^2.2.0",
-    "ngrok": "^3.0.0"
+    "ngrok": "^3.0.0",
+    "prettier": "^1.11.1"
   },
   "now": {
     "env": {
