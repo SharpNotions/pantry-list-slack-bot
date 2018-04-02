@@ -42,17 +42,6 @@ module.exports = async (req, res) => {
   const email = `${user_name}@${team_domain}.com`;
   const url = `https://pantry-list-api.herokuapp.com/item?user=${email}`;
 
-  let msgItemAdded = {
-    response_type: "ephemeral",
-    text: `Success! You just added *${data.item_name}* to the pantry list`
-  };
-
-  const itemDescription = data.item_details.description;
-
-  itemDescription === ""
-    ? (msgItemAdded.text += ".")
-    : (msgItemAdded.text += `, with a description of *${itemDescription}*.`);
-
   fetch(url, {
     method: "POST",
     headers: {
@@ -64,5 +53,4 @@ module.exports = async (req, res) => {
     .then(res => res.text())
     .then(body => console.log(body))
     .catch(console.error);
-  send(res, 200, msgItemAdded);
 };
