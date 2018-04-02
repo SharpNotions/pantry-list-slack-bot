@@ -1,13 +1,13 @@
 {
   "name": "pantry-list-slack-bot",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "repository": "https://github.com/SharpNotions/pantry-list-slack-bot.git",
   "author": "Phill Ayers <phillip.ayers@sharpnotions.com>",
   "license": "MIT",
   "scripts": {
     "start": "micro",
-    "dev": "micro-dev",
+    "dev": "NODE_PATH='.' micro-dev",
     "ngrok": "ngrok http 3000"
   },
   "dependencies": {
@@ -20,10 +20,12 @@
   },
   "devDependencies": {
     "micro-dev": "^2.2.0",
-    "ngrok": "^3.0.0"
+    "ngrok": "^3.0.0",
+    "prettier": "^1.11.1"
   },
   "now": {
     "env": {
+      "NODE_PATH": ".",
       "NODE_ENV": "production",
       "SLACK_TOKEN": "@slack_token",
       "SLACK_WEBHOOK_URL": "@slack_webhook_url",
