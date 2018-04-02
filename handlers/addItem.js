@@ -1,21 +1,68 @@
-const parse = require('urlencoded-body-parser')
-const fetch = require('node-fetch')
+const parse = require("urlencoded-body-parser");
+const fetch = require("node-fetch");
 
-const { send } = require('micro')
+const { send } = require("micro");
+const parseRequestText = text => {
+  const descriptionIncluded = text.includes("|");
+  let parsedRequestText;
+
+  if (descriptionIncluded) {
+    splitText = text.split("|");
+    parsedRequestText = {
+      item_name: splitText[0],
+      item_details: { description: splitText[1] }
+    };
+  } else {
+    parsedRequestText = {
+      item_name: text,
+      item_details: { description: "" }
+    };
+  }
+  return parsedRequestText;
+};
 
 module.exports = async (req, res) => {
-  const { text, token } = await parse(req);
+  const { text, team_domain, token, user_name } = await parse(req);
+
   if (token !== process.env.SLACK_VERIFICATION_TOKEN) {
-    send(res, 401, 'Token did not equal verification token')
+    send(res, 401, "Token did not equal verification token");
+    return;
   }
-  send(res, 200)
-  const url = 'https://pantry-list-api-pr-16.herokuapp.com/item'
+
+  if (text === "") {
+    send(res, 200, {
+      response_type: "ephemeral",
+      text:
+        "Sorry, that didn't work. Item name is required. (usage hint: /add Item Name|Description)"
+    });
+    return;
+  }
+
+  const data = parseRequestText(text);
+  const email = `${user_name}@${team_domain}.com`;
+  const url = `https://pantry-list-api.herokuapp.com/item?user=${email}`;
+
+  let msgItemAdded = {
+    response_type: "ephemeral",
+    text: `Success! You just added *${data.item_name}* to the pantry list`
+  };
+
+  const itemDescription = data.item_details.description;
+
+  itemDescription === ""
+    ? (msgItemAdded.text += ".")
+    : (msgItemAdded.text += `, with a description of *${itemDescription}*.`);
+
   fetch(url, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      authorization: `Bearer ${process.env.SLACK_TOKEN}`,
-      'Content-Type': 'application/json'
+      authorization: `Basic ${process.env.SLACK_TOKEN}`,
+      "Content-Type": "application/json"
     },
-    body: JSON.stringify({item_name: text})
-  });
-}
+    body: JSON.stringify(data)
+  })
+    .then(res => res.text())
+    .then(body => console.log(body))
+    .catch(console.error);
+  send(res, 200, msgItemAdded);
+};
