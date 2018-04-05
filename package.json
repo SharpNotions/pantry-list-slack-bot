@@ -30,7 +30,8 @@
       "SLACK_TOKEN": "@slack_token",
       "SLACK_WEBHOOK_URL": "@slack_webhook_url",
       "SLACK_VERIFICATION_TOKEN": "@slack_verification_token",
-      "CHANNEL_ID": "C965FPQNQ"
+      "CHANNEL_ID": "C965FPQNQ",
+      "PANTRY_LIST_API_URL" : "https://pantry-list-api.herokuapp.com"
     }
   }
 }
