@@ -40,7 +40,7 @@ module.exports = async (req, res) => {
 
   const data = parseRequestText(text);
   const email = `${user_name}@${team_domain}.com`;
-  const url = `https://pantry-list-api.herokuapp.com/item?user=${email}`;
+  const url = `${process.env.PANTRY_LIST_API_URL}/item?user=${email}`;
 
   fetch(url, {
     method: "POST",
