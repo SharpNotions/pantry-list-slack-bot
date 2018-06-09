@@ -4,7 +4,7 @@
 | Name          | Description                                      |
 |---------------|--------------------------------------------------|
 | `/add`        | Add an item to the pantry list                   |
-| '/list'       | Get the full list of pantry items                |
+| `/list`       | Get the full list of pantry items                |
 
 ## Dialogflow
 https://console.dialogflow.com/api-client/#/editAgent/44cf0127-4356-4937-ab43-5dff0d1598db/
