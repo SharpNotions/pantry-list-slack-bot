@@ -2,6 +2,14 @@ const fetch = require('node-fetch')
 const { json } = require('micro')
 const { getUserEmail } = require('helpers')
 const GET_USER_RANKINGS = 'GET_USER_RANKINGS'
+const api = {
+  get: url => fetch(url, {
+    headers: {
+      authorization: `Basic ${SLACK_TOKEN}`,
+      'Content-Type': 'application/json'
+    }
+  })
+}
 
 const dialogflow = async (req, res) => {
   const { result, originalRequest } = await json(req)
@@ -38,9 +46,7 @@ function getTextForResponse() {
 async function getUserRanking(user) {
   const url = `https://pantry-list-api.herokuapp.com/user_ranking?user=${user}`
 
-  const userRankings = await fetch(url, {
-    headers: { authorization: `Bearer ${process.env.SLACK_TOKEN}` }
-  })
+  const userRankings = await api.get(url)
     .then(response => response.json())
     .then(rankings =>
       rankings.map((item, index) => ({
