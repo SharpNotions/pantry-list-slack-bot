@@ -32,11 +32,7 @@ async function getUserRanking(user) {
 
   const userRankings = await api.get(url)
     .then(response => response.json())
-    .then(rankings =>
-      rankings.map((item, index) => ({
-        text: `${index + 1}. ${item.item_name}`
-      }))
-    )
+    .then(rankings => rankings.map(buildRankingList))
 
   const slack_message = {
     text: 'Your Ranking:',
@@ -47,5 +43,7 @@ async function getUserRanking(user) {
     payload: { slack: slack_message }
   }
 }
+
+const buildRankingList = (item, index) => ({ text: `${index + 1}. ${item.item_name}` });
 
 module.exports = dialogflow
