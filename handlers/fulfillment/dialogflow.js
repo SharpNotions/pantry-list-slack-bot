@@ -6,12 +6,13 @@ const GET_TOTAL_RANKINGS = 'GET_TOTAL_RANKINGS'
 const { PANTRY_LIST_API_URL, SLACK_TOKEN } = process.env
 
 const api = {
-  get: url => fetch(url, {
-    headers: {
-      authorization: `Basic ${SLACK_TOKEN}`,
-      'Content-Type': 'application/json'
-    }
-  })
+  get: url =>
+    fetch(url, {
+      headers: {
+        authorization: `Basic ${SLACK_TOKEN}`,
+        'Content-Type': 'application/json'
+      }
+    })
 }
 
 const dialogflow = async (req, res) => {
@@ -33,7 +34,8 @@ const dialogflow = async (req, res) => {
 async function getUserRanking(user) {
   const url = `${PANTRY_LIST_API_URL}/user_ranking?user=${user}`
 
-  const userRankings = await api.get(url)
+  const userRankings = await api
+    .get(url)
     .then(response => response.json())
     .then(rankings => rankings.map(buildRankingList))
     .catch(console.log)
@@ -50,13 +52,14 @@ async function getUserRanking(user) {
 
 async function getTotalRankings(user) {
   const url = `${PANTRY_LIST_API_URL}/top_rankings?user=${user}`
-  const topRankings = await api.get(url)
+  const topRankings = await api
+    .get(url)
     .then(response => response.json())
     .then(rankings => rankings.singleTransVoteRankings.map(buildRankingList))
     .catch(console.log)
 
   const slack_message = {
-    text: 'Top Ranking:',
+    text: 'Top Ranking :',
     attachments: topRankings
   }
 
@@ -65,6 +68,8 @@ async function getTotalRankings(user) {
   }
 }
 
-const buildRankingList = (item, index) => ({ text: `${index + 1}. ${item.item_name}` });
+const buildRankingList = (item, index) => ({
+  text: `${index + 1}. ${item.item_name}`
+})
 
 module.exports = dialogflow
