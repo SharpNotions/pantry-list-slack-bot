@@ -56,21 +56,21 @@ const validateRequest = {
 module.exports = handleErrors(async (req, res) => {
   const { text, team_domain, token, user_name } = await parse(req)
 
-    validateRequest.token(res, token, process.env.SLACK_VERIFICATION_TOKEN)
-    validateRequest.text(res, text)
+  validateRequest.token(res, token, process.env.SLACK_VERIFICATION_TOKEN)
+  validateRequest.text(res, text)
 
-    const data = parseRequestText(text)
-    const email = `${user_name}@${team_domain}.com`
-    const url = `${process.env.PANTRY_LIST_API_URL}/item?user=${email}`
+  const data = parseRequestText(text)
+  const email = `${user_name}@${team_domain}.com`
+  const url = `${process.env.PANTRY_LIST_API_URL}/item?user=${email}`
 
-    const response = await fetch(url, {
-      method: 'POST',
-      headers: {
-        authorization: `Basic ${process.env.SLACK_TOKEN}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(data)
-    })
+  const response = await fetch(url, {
+    method: 'POST',
+    headers: {
+      authorization: `Basic ${process.env.SLACK_TOKEN}`,
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(data)
+  })
 
   if (!response.ok) {
     throw new Error('error')
