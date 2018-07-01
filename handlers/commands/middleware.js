@@ -1,4 +1,29 @@
 const { send } = require('micro')
+const parse = require('urlencoded-body-parser')
+
+const requireSlackToken = fn => async (req, res) => {
+  const { token } = await parse(req)
+  if (!token || token !== process.env.SLACK_VERIFICATION_TOKEN) {
+    const err = new Error()
+    err.name = 'token'
+    err.message =
+      "Sorry, that didn't work. Authorization is required to use the `/add` slash command."
+    throw err
+  }
+  return await fn(req, res)
+}
+
+const requireText = fn => async (req, res) => {
+  const { text } = await parse(req)
+  if (!text || text === '') {
+    const err = new Error()
+    err.name = 'required'
+    err.message =
+      "Sorry, that didn't work. Item name is required. Usage hint: `/add Item Name|Description`."
+    throw err
+  }
+  return await fn(req, res)
+}
 
 const handleErrors = fn => async (req, res) => {
   try {
@@ -29,5 +54,7 @@ const handleErrors = fn => async (req, res) => {
 }
 
 module.exports = {
-  handleErrors
+  handleErrors,
+  requireSlackToken,
+  requireText
 }

@@ -1,7 +1,9 @@
 const parse = require('urlencoded-body-parser')
 const fetch = require('node-fetch')
 const { send } = require('micro')
-const { handleErrors } = require('./middleware')
+const { compose } = require('ramda')
+const { handleErrors, requireSlackToken, requireText } = require('./middleware')
+const { PANTRY_LIST_API_URL, SLACK_TOKEN } = process.env
 
 const parseRequestText = text => {
   const descriptionIncluded = text.includes('|')
@@ -31,42 +33,19 @@ const createAttachment = data => {
   return attachment
 }
 
-const validateRequest = {
-  text: (res, text) => {
-    if (!text || text === '') {
-      const err = new Error()
-      err.name = 'required'
-      err.message =
-        "Sorry, that didn't work. Item name is required. Usage hint: `/add Item Name|Description`."
-      throw err
-    }
-  },
+const enhanced = compose(handleErrors, requireSlackToken, requireText)
 
-  token: (res, token, slackVerificationToken) => {
-    if (token !== slackVerificationToken) {
-      const err = new Error()
-      err.name = 'token'
-      err.message =
-        "Sorry, that didn't work. Authorization is required to use the `/add` slash command."
-      throw err
-    }
-  }
-}
-
-module.exports = handleErrors(async (req, res) => {
+module.exports = enhanced(async (req, res) => {
   const { text, team_domain, token, user_name } = await parse(req)
-
-  validateRequest.token(res, token, process.env.SLACK_VERIFICATION_TOKEN)
-  validateRequest.text(res, text)
 
   const data = parseRequestText(text)
   const email = `${user_name}@${team_domain}.com`
-  const url = `${process.env.PANTRY_LIST_API_URL}/item?user=${email}`
+  const url = `${PANTRY_LIST_API_URL}/item?user=${email}`
 
   const response = await fetch(url, {
     method: 'POST',
     headers: {
-      authorization: `Basic ${process.env.SLACK_TOKEN}`,
+      authorization: `Basic ${SLACK_TOKEN}`,
       'Content-Type': 'application/json'
     },
     body: JSON.stringify(data)
