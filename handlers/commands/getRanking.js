@@ -44,7 +44,5 @@ module.exports = enhanced(async (req, res) => {
 
   const response = await getTotalRankings(email)
 
-  send(res, 200, {
-    ...response
-  })
+  send(res, 200, response)
 })
