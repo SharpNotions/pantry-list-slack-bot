@@ -63,7 +63,7 @@ module.exports = async (req, res) => {
     validateRequest.token(res, token, process.env.SLACK_VERIFICATION_TOKEN)
 
     const email = `${user_name}@${team_domain}.com`
-    const url = `${process.env.PANTRY_LIST_API_URL}/items?user=${email}`
+    const url = `${process.env.PANTRY_LIST_API_URL}/unranked_items?user=${email}`
     const response = await fetch(url, {
       headers: {
         authorization: `Basic ${process.env.SLACK_TOKEN}`,
