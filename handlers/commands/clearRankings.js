@@ -22,13 +22,13 @@ module.exports = enhanced(async (req, res) => {
 
   if (!user_name || !team_domain) {
     send(res, 400, {
-      message: 'user_name and team_domain parameters are required'
+      text: 'user_name and team_domain parameters are required'
     })
   }
 
   if (user_name !== ADMIN_USER_NAME) {
     send(res, 400, {
-      message: 'INTRUDER!  You\'re not Greg!'
+      text: 'INTRUDER!  You\'re not Greg!'
     })
   }
 
@@ -46,11 +46,11 @@ module.exports = enhanced(async (req, res) => {
     
     if(response.status < 400) {
       send(res, 200, {
-        message: 'Rankings have been cleared!'
+        text: 'Rankings have been cleared!'
       })
     } else {
       send(res, response.status, {
-        message: response.statusText
+        text: response.statusText
       })
     }
   } catch (err) {
