@@ -27,7 +27,7 @@ module.exports = enhanced(async (req, res) => {
   }
 
   if (user_name !== ADMIN_USER_NAME) {
-    send(res, 400, {
+    send(res, 200, {
       text: 'INTRUDER!  You\'re not Greg!'
     })
   }
