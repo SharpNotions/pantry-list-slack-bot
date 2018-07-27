@@ -2,7 +2,7 @@ const parse = require('urlencoded-body-parser')
 const fetch = require('node-fetch')
 const { send } = require('micro')
 const { compose } = require('ramda')
-const { handleErrors, requireSlackToken } = require('./middleware')
+const { handleErrors, requireSlackToken, logRequests } = require('./middleware')
 const { PANTRY_LIST_API_URL, SLACK_TOKEN, ADMIN_USER_NAME } = process.env
 
 const api = {
@@ -15,7 +15,7 @@ const api = {
     })
 }
 
-const enhanced = compose(handleErrors, requireSlackToken)
+const enhanced = compose(logRequests, handleErrors, requireSlackToken)
 
 module.exports = enhanced(async (req, res) => {
   const { user_name, team_domain } = await parse(req)
