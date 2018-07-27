@@ -17,6 +17,7 @@
     "node-fetch": "^2.1.2",
     "ramda": "^0.25.0",
     "require-directory": "^2.1.1",
+    "sumo-logger": "^1.5.0",
     "urlencoded-body-parser": "^2.0.1"
   },
   "devDependencies": {
@@ -33,7 +34,8 @@
       "SLACK_VERIFICATION_TOKEN": "@slack_verification_token",
       "CHANNEL_ID": "CBWJD4Z1C",
       "PANTRY_LIST_API_URL": "https://pantry-list-api.herokuapp.com",
-      "ADMIN_USER_NAME": "greg"
+      "ADMIN_USER_NAME": "greg",
+      "LOGGER_ENDPOINT": "@logger_endpoint"
     }
   }
 }

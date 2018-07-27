@@ -2,7 +2,12 @@ const parse = require('urlencoded-body-parser')
 const fetch = require('node-fetch')
 const { send } = require('micro')
 const { compose } = require('ramda')
-const { handleErrors, requireSlackToken, requireText } = require('./middleware')
+const {
+  handleErrors,
+  requireSlackToken,
+  requireText,
+  logRequests
+} = require('./middleware')
 const { PANTRY_LIST_API_URL, SLACK_TOKEN } = process.env
 
 const parseRequestText = text => {
@@ -33,7 +38,12 @@ const createAttachment = data => {
   return attachment
 }
 
-const enhanced = compose(handleErrors, requireSlackToken, requireText)
+const enhanced = compose(
+  logRequests,
+  handleErrors,
+  requireSlackToken,
+  requireText
+)
 
 module.exports = enhanced(async (req, res) => {
   const { text, team_domain, token, user_name } = await parse(req)

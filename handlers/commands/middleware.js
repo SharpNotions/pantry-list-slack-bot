@@ -1,9 +1,12 @@
 const { send } = require('micro')
 const parse = require('urlencoded-body-parser')
+const SumoLogger = require('sumo-logger')
+const { SLACK_VERIFICATION_TOKEN, LOGGER_ENDPOINT } = process.env
+const sumoLogger = new SumoLogger({ endpoint: LOGGER_ENDPOINT })
 
 const requireSlackToken = fn => async (req, res) => {
   const { token } = await parse(req)
-  if (!token || token !== process.env.SLACK_VERIFICATION_TOKEN) {
+  if (!token || token !== SLACK_VERIFICATION_TOKEN) {
     const err = new Error()
     err.name = 'token'
     err.message =
@@ -29,6 +32,7 @@ const handleErrors = fn => async (req, res) => {
   try {
     return await fn(req, res)
   } catch (err) {
+    sumoLogger.log(err)
     switch (err.name) {
       case 'token':
       case 'required':
@@ -53,8 +57,20 @@ const handleErrors = fn => async (req, res) => {
   }
 }
 
+const logRequests = fn => async (req, res) => {
+  const body = await parse(req).catch(() => ({}))
+  sumoLogger.log({
+    method: req.method,
+    url: req.url,
+    header: req.headers,
+    body
+  })
+  return await fn(req, res)
+}
+
 module.exports = {
   handleErrors,
   requireSlackToken,
-  requireText
+  requireText,
+  logRequests
 }
