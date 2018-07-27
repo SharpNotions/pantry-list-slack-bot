@@ -32,7 +32,7 @@ const handleErrors = fn => async (req, res) => {
   try {
     return await fn(req, res)
   } catch (err) {
-    sumoLogger.log(err)
+    sumoLogger.log({ err })
     switch (err.name) {
       case 'token':
       case 'required':

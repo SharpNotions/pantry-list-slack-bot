@@ -8,6 +8,7 @@ const {
   requireText,
   logRequests
 } = require('./middleware')
+const { getUserEmail } = require('../../helpers')
 const { PANTRY_LIST_API_URL, SLACK_TOKEN } = process.env
 
 const parseRequestText = text => {
@@ -46,10 +47,10 @@ const enhanced = compose(
 )
 
 module.exports = enhanced(async (req, res) => {
-  const { text, team_domain, token, user_name } = await parse(req)
+  const { text, team_domain, token, user_name, user_id } = await parse(req)
 
   const data = parseRequestText(text)
-  const email = `${user_name}@${team_domain}.com`
+  const email = await getUser(user_id)
   const url = `${PANTRY_LIST_API_URL}/item?user=${email}`
 
   const response = await fetch(url, {
