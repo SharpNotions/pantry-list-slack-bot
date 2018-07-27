@@ -20,7 +20,7 @@ async function getTotalRankings(user) {
   const topRankings = await api
     .get(url)
     .then(response => response.json())
-    .then(rankings => rankings.singleTransVoteRankings.map(buildRankingList))
+    .then(rankings => rankings.fiboRankings.map(buildRankingList))
     .catch(err => {
       throw new Error('error')
     })
