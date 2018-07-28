@@ -2,7 +2,11 @@ const parse = require('urlencoded-body-parser')
 const fetch = require('node-fetch')
 const { send } = require('micro')
 const { getUserEmail } = require('../../helpers')
-const { SLACK_VERIFICATION_TOKEN, SLACK_TOKEN } = process.env
+const {
+  SLACK_VERIFICATION_TOKEN,
+  SLACK_TOKEN,
+  PANTRY_LIST_API_URL
+} = process.env
 const createAttachment = data => {
   let attachment = {
     color: '#7c4be0',
@@ -63,9 +67,7 @@ module.exports = async (req, res) => {
     validateRequest.token(res, token, SLACK_VERIFICATION_TOKEN)
 
     const email = await getUserEmail(user_id)
-    const url = `${
-      process.env.PANTRY_LIST_API_URL
-    }/unranked_items?user=${email}`
+    const url = `${PANTRY_LIST_API_URL}/unranked_items?user=${email}`
     const response = await fetch(url, {
       headers: {
         authorization: `Basic ${SLACK_TOKEN}`,
