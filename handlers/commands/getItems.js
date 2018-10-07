@@ -63,7 +63,7 @@ const validateRequest = {
 module.exports = async (req, res) => {
   try {
     const { team_domain, token, user_name, user_id, text } = await parse(req)
-    const list = text ? text.trim().split(' ')[0] : 'default';
+    const list = text ? text.trim().split(' ')[0] : 'default'
 
     validateRequest.token(res, token, SLACK_VERIFICATION_TOKEN)
 
