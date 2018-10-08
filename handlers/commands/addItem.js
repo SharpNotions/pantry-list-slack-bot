@@ -49,10 +49,12 @@ const enhanced = compose(
 module.exports = enhanced(async (req, res) => {
   const { text, team_domain, token, user_name, user_id } = await parse(req)
 
-  const data = parseRequestText(text)
-  const email = await getUser(user_id)
-  const url = `${PANTRY_LIST_API_URL}/item?user=${email}`
-
+  const textSplit = text.split(' ')
+  const list = textSplit[0]
+  const data = parseRequestText(textSplit[1])
+  const email = await getUserEmail(user_id)
+  const url = `${PANTRY_LIST_API_URL}/item?user=${email}&list=${list}`
+  
   const response = await fetch(url, {
     method: 'POST',
     headers: {

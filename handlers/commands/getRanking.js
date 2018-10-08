@@ -16,8 +16,8 @@ const api = {
     })
 }
 
-async function getTotalRankings(user) {
-  const url = `${PANTRY_LIST_API_URL}/top_rankings?user=${user}`
+async function getTotalRankings(user, list) {
+  const url = `${PANTRY_LIST_API_URL}/top_rankings?user=${user}&list=${list}`
   const topRankings = await api
     .get(url)
     .then(response => response.json())
@@ -41,8 +41,9 @@ const enhanced = compose(logRequests, handleErrors, requireSlackToken)
 
 module.exports = enhanced(async (req, res) => {
   const { text, team_domain, token, user_name, user_id } = await parse(req)
+  const list = text ? text.trim().split(' ')[0] : 'default'
   const email = await getUserEmail(user_id)
-  const response = await getTotalRankings(email)
+  const response = await getTotalRankings(email, list)
 
   send(res, 200, response)
 })

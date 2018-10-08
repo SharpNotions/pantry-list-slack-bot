@@ -62,12 +62,13 @@ const validateRequest = {
 
 module.exports = async (req, res) => {
   try {
-    const { team_domain, token, user_name, user_id } = await parse(req)
+    const { team_domain, token, user_name, user_id, text } = await parse(req)
+    const list = text ? text.trim().split(' ')[0] : 'default'
 
     validateRequest.token(res, token, SLACK_VERIFICATION_TOKEN)
 
     const email = await getUserEmail(user_id)
-    const url = `${PANTRY_LIST_API_URL}/unranked_items?user=${email}`
+    const url = `${PANTRY_LIST_API_URL}/unranked_items?user=${email}&list=${list}`
     const response = await fetch(url, {
       headers: {
         authorization: `Basic ${SLACK_TOKEN}`,
